@@ -6,24 +6,25 @@ def is_gray(four_tuple):
     return four_tuple[0] == four_tuple[1] == four_tuple[2]
 
 if __name__ == "__main__":
+    from itertools import izip_longest
     from PIL import Image
     import re
 
+    import utils
+
     image = Image.open('/tmp/oxygen.png')
     pixels = image.getdata()
-    #print [p[0] for p in pixels if p[0]==p[1]==p[2]]
     width = image.size[0]
-    gray_values = []
-    for pixel in pixels:
-        if is_gray(pixel):
-            if not gray_values or gray_values[-1] != pixel[0]:
-                gray_values.append(pixel[0])
-            
-    output = ''.join(map(chr, gray_values))
-    print output
+    pixel_lines = izip_longest(*[iter(pixels)]*width)
+    for line in pixel_lines:
+        if is_gray(line[0]):
+            break
+    #print [p[0] for p in line]
+    output = ''.join(map(chr, [p[0] for p in line[::7]]))
+    #print output
 
     list_pattern = re.compile(r'(\[\d+(?:, \d+)*\])')
     l = eval(re.search(list_pattern, output).group(1))
-    print l
-    print ''.join(map(chr, l))
+    #print l
+    print utils.update_url(url, utils.return_this, ''.join(map(chr, l)))
 
