@@ -11,10 +11,19 @@ def update_url(url, func, *args, **kwargs):
     'http://example.com/root/filxnamx.ext'
     >>> update_url('http://example.com/root/filename.ext', return_this, 'newfilename')
     'http://example.com/root/newfilename.ext'
+    >>> update_url('http://example.com/root/filename.ext?getparam1=abc', return_this, 'newfilename.xxx')
+    'http://example.com/root/newfilename.xxx'
     """
-    path = urlparse.urlparse(url)[2]
-    filename, ext = os.path.splitext(os.path.split(path)[1])
-    return url[:-len(filename)-len(ext)] + func(filename, *args, **kwargs) + ext
+    scheme, netloc, path, params, query, fragment = urlparse.urlparse(url)
+    path_head, path_tail = os.path.split(path)
+    filename, ext = os.path.splitext(path_tail)
+
+    url_root = "%s://%s%s/" % (scheme, netloc, path_head)
+    new_filename = func(filename, *args, **kwargs)
+    if new_filename.find('.') >= 0:
+        return url_root + new_filename
+    else:
+        return url_root + new_filename + ext
 
 def return_this(irrelevant_orig_filename, new_filename):
     """
@@ -25,9 +34,8 @@ def return_this(irrelevant_orig_filename, new_filename):
 
 
 def wget(url):
-    """
-    """
-    domain, path = urlparse.urlparse(url)[1:3]
+    domain, path, x, query = urlparse.urlparse(url)[1:5]
+    path = '%s?%s' %(path, query)
     connection = httplib.HTTPConnection(domain)
     connection.request('GET', path)
     response = connection.getresponse()
