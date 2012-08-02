@@ -16,13 +16,14 @@ if __name__ == "__main__":
     count = 0;
     while count <= 400:
         source = utils.wget(url)
-        print "%d: %s" % (count, source)
+        #print "%d: %s" % (count, source)
         mo = re.search(value_pattern, source)
         if mo:
             next_value = mo.group(1)
         elif source.find('Divide by two') >= 0:
             next_value = str(int(this_value) / 2)
         else:
+            print "%d: %s" % (count, source)
             break
         url = url.replace(this_value, next_value)
         this_value = next_value
