@@ -30,25 +30,17 @@ second = """156,141,165,135,169,131,176,130,187,134,191,140,191,146,186,150,179,
 77,155,81,148,87,140,96,138,105,141,110,136,111,126,113,129,118,117,128,114,137,115,146,114,155,115,
 158,121,157,128,156,134,157,136,156,136"""
 
-def plot(pix, x, y, colour):
-    pix[x, y-1] = pix[x-1, y] = pix[x, y] = pix[x+1, y] = pix[x, y+1] = colour
-
-def plot_points(pix, sequence, colour=(255,0,0)):
-    while len(sequence) > 0:
-        x = sequence.pop(0)
-        y = sequence.pop(0)
-        plot(pix, x, y, colour)
-
 if __name__ == "__main__":
     from PIL import Image
+    import utils
 
     first = map(int, first.replace('\n', '').split(','))
     second = map(int, second.replace('\n', '').split(','))
 
     im = Image.open('good.jpg', 'r')
     pix = im.load()
-    plot_points(pix, first)
-    plot_points(pix, second)#, (0,255,0))
+    utils.plot_points(pix, first)
+    utils.plot_points(pix, second)#, (0,255,0))
     
     im.save('good2.jpg', 'jpeg')
 
