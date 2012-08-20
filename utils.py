@@ -43,6 +43,16 @@ def wget(url):
         raise Exception, "Unable to wget"
     return response.read()
 
+
+def plot(pix, x, y, colour):
+    pix[x, y-1] = pix[x-1, y] = pix[x, y] = pix[x+1, y] = pix[x, y+1] = colour
+
+def plot_points(pix, sequence, colour=(255,0,0)):
+    while len(sequence) > 0:
+        x = sequence.pop(0)
+        y = sequence.pop(0)
+        plot(pix, x, y, colour)
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
