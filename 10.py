@@ -12,5 +12,5 @@ if __name__ == "__main__":
     while len(a) <= target_index + 1:
         a.append(utils.look_and_say(a[-1]))
 
-    print len(str(a[target_index]))
+    print utils.update_url(url, utils.return_this, str(len(str(a[target_index]))))
 
