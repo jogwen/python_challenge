@@ -53,6 +53,34 @@ def plot_points(pix, sequence, colour=(255,0,0)):
         y = sequence.pop(0)
         plot(pix, x, y, colour)
 
+
+def look_and_say(integer):
+    """
+    >>> look_and_say(211122)
+    123122
+    """
+    digits = list(str(integer))
+    new_digits = ''
+    while digits:
+        count, first_digit = count_first_digit(digits)
+        digits = digits[count:]
+        new_digits += "%d%d" % (count, int(first_digit))
+    return int(new_digits)
+
+def count_first_digit(list_of_digits):    
+    """
+    >>> count_first_digit(['2', '1', '1', '1', '2', '2'])
+    (1, '2')
+    """
+    count = 1
+    first_digit = list_of_digits[0]
+    for item in list_of_digits[1:]:
+        if item == first_digit: 
+            count += 1
+        else:
+            break
+    return count, first_digit
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
