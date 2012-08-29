@@ -9,7 +9,6 @@ img2 = "http://www.pythonchallenge.com/pc/return/wire.png"
 
 
 if __name__ == "__main__":
-    import math
     from PIL import Image
 
     input_im = Image.open('wire.png', 'r')
@@ -37,8 +36,6 @@ if __name__ == "__main__":
         count += sum(side_lengths)
         instructions.extend(zip(directions, side_lengths))
         side_length -= 2
-    print instructions
-    import pdb; pdb.set_trace()
 
     x, y = -1, 0
     count = 0
