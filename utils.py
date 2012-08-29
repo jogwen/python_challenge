@@ -81,6 +81,32 @@ def count_first_digit(list_of_digits):
             break
     return count, first_digit
 
+
+def is_even(i):
+    """
+    >>> is_even(0)
+    True
+    >>> is_even(-2)
+    True
+    >>> is_even(-1)
+    False
+    """
+    if i % 2 == 0:
+        return True
+    else:
+        return False
+
+def is_odd(i):
+    """
+    >>> is_odd(0)
+    False
+    >>> is_odd(-2)
+    False
+    >>> is_odd(-1)
+    True
+    """
+    return not is_even(i)
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
