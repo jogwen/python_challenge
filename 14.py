@@ -17,10 +17,39 @@ if __name__ == "__main__":
     pixel_count = input_width * input_height
     input_pix = input_im.load()
     
-    output_width = 100
-    output_im = Image.new('RGB', (output_width, int(math.ceil(float(pixel_count)/output_width))), (255, 255, 255))
+    side_length = 100
+    output_im = Image.new('RGB', (side_length, side_length), (255, 255, 255))
     output_pix = output_im.load()
-    for i in range(pixel_count): 
-        x, y = fold_into_coordinates(i, output_width) 
+
+    def get_side_lengths(side_length):
+        return (side_length, side_length-1, side_length-1, side_length-2)
+
+    directions = [
+        [1, 0], # right
+        [0, 1], # down
+        [-1, 0], # left
+        [0, -1] # up
+    ]
+    count = 0
+    instructions = []
+    while count < pixel_count:
+        side_lengths = get_side_lengths(side_length)
+        count += sum(side_lengths)
+        instructions.extend(zip(directions, side_lengths))
+        side_length -= 2
+    print instructions
+    import pdb; pdb.set_trace()
+
+    x, y = -1, 0
+    count = 0
+    for i in range(pixel_count):
+        if count == 0: 
+            direction, limit = instructions.pop(0)
+        x += direction[0]
+        y += direction[1]
         output_pix[x, y] = input_pix[i, 0]
+        count += 1
+        if count == limit:
+            count = 0
+
     output_im.save('spiral.png')

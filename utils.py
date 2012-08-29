@@ -107,16 +107,6 @@ def is_odd(i):
     """
     return not is_even(i)
 
-
-def fold_into_coordinates(integer, width):
-    """
-    >>> fold_into_coordinates(105, 100)
-    (5, 1)
-    """
-    x = integer % width
-    y = int(integer / width)
-    return (x, y)
-
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
