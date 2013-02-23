@@ -7,11 +7,16 @@ comment = "remember: 100*100 = (100+99+99+98) + (..."
 img1 = "http://www.pythonchallenge.com/pc/return/italy.jpg"
 img2 = "http://www.pythonchallenge.com/pc/return/wire.png"
 
+auth = ("huge", "file")
 
 if __name__ == "__main__":
     from PIL import Image
+    import requests
+    from StringIO import StringIO
 
-    input_im = Image.open('wire.png', 'r')
+    wire = requests.get(img2, auth=auth)
+
+    input_im = Image.open(StringIO(wire.content), 'r')
     input_width, input_height = input_im.size
     pixel_count = input_width * input_height
     input_pix = input_im.load()
